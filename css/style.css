@@ -1,0 +1,19 @@
+/* Put your CSS here */
+.ember-application {
+    margin: 20px;
+}
+
+.title_area {
+}
+
+.post_list {
+	float: left;
+	width: 270px;
+	height: 500px;
+	overflow: auto;
+}
+
+.post {
+	width: 50%;
+	margin: auto;
+}

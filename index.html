@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Darkboard | Example Ember Application</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script type="text/x-handlebars">
+    <div class="title_area">
+      <h1>Welcome to Darkboard</h1>
+      <p>{{#link-to 'index'}}Main{{/link-to}}</p>
+      <p>{{#link-to 'posts'}}Posts{{/link-to}}</p>
+    </div>
+    {{outlet}}
+  </script>
+  
+  <script type="text/x-handlebars" id="index">
+    <h2>Darkboard is for posting</h2>
+  </script>
+         
+  <script type="text/x-handlebars" id="posts/index">
+    <div class="post">  
+      <p class="text-warning">Please select a post</p>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="posts">
+    <h2>Recent Posts</h2>
+    <div class="post_list">
+      {{#link-to 'posts.new'}}<button>Add new post</button>{{/link-to}}
+      <ul>
+      {{#each post in model}}
+        <li>{{#link-to 'post' this.post}}{{post.title}}{{/link-to}}</li>
+        <p>by: {{post.author}}</p>
+      {{/each}}
+      </ul>
+    </div>
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="posts/new">
+   <form {{action 'save' on="submit"}}>
+      {{partial "edit"}}
+      <button type="submit">Save post</button>
+    </form> 
+  </script>
+  
+  <script type="text/x-handlebars" id="post">
+    <div class="post">    
+      <h2>{{title}}</h2>
+      <h3>By: {{author}}</h3>
+      <p>{{body}}</p>
+      {{#link-to 'posts'}}<button {{action "removePost"}} class="destroy">Delete</button>{{/link-to}}
+      {{#if isEditing}}
+        {{partial 'edit'}}
+        <button {{action 'doneEditing'}}>Done</button>
+      {{else}}
+        <button {{action 'editPost'}}>Edit</button>
+      {{/if}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="_edit">
+    <p>{{input type="text" value=title placeholder="Title"}}</p>
+    <p>{{input type="text" value=author placeholder="Name"}}</p>
+    <p>{{textarea value=body rows=10 cols=88 placeholder="Write your post here..."}}</p>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-v2.0.0.js"></script>
+  <script src="js/libs/ember-1.9.1.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/app.js"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="tests/runner.js"></script>
+</body>
+</html>
